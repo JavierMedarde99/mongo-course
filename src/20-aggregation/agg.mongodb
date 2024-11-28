@@ -1,0 +1,14 @@
+use("sample_airbnb")
+
+db.listingAndReviews.find({
+    amenities: "Wifi"
+},{
+    price: 1,
+    amenities: 1
+})
+
+db.listingAndReviews.aggregate([
+    {$match: {amenities: "Wifi"}},// find
+    {$project: {address : 1}}, // project
+    {$group: {_id: "$address.country", count :{$sum : 1 }}}
+])
